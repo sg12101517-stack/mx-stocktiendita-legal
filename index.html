@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockTiendita — Inventario y Caducidad Offline para tu Tienda</title>
+  <style>
+    :root {
+      --bg: #fffbf7;
+      --surface: #ffffff;
+      --terracotta: #c2410c;
+      --terracotta-dark: #9a3412;
+      --blue: #0284c7;
+      --blue-soft: #e0f2fe;
+      --text: #1c1917;
+      --muted: #57534e;
+      --border: #fed7aa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+      color: #fff;
+      padding: 44px 20px 52px;
+      text-align: center;
+    }
+    .nav-bar {
+      max-width: 980px;
+      margin: 0 auto 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand { font-weight: 800; font-size: 20px; letter-spacing: -0.3px; }
+    .nav-links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .nav-links a { color: #ffedd5; text-decoration: none; font-size: 14px; font-weight: 600; }
+    .nav-links a:hover { color: #fff; text-decoration: underline; }
+    .lang-btn {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .hero h1 { font-size: 36px; line-height: 1.2; max-width: 760px; margin: 0 auto 14px; }
+    .hero p { font-size: 18px; color: #ffedd5; max-width: 680px; margin: 0 auto 24px; }
+    .badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    main { max-width: 980px; margin: -24px auto 48px; padding: 0 20px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid #f5e6d8;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(194,65,12,0.06);
+    }
+    .card h3 { color: var(--terracotta); font-size: 18px; margin-bottom: 8px; }
+    .card .tag {
+      display: inline-block;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .pricing-box {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    .pricing-box h2 { color: var(--terracotta-dark); margin-bottom: 14px; }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .plan {
+      border: 1px solid #e7e5e4;
+      border-radius: 14px;
+      padding: 18px;
+      background: #fffdfb;
+    }
+    .plan.featured {
+      border: 2px solid var(--terracotta);
+      background: #fff7ed;
+    }
+    .plan .price { font-size: 24px; font-weight: 800; color: var(--terracotta); margin: 6px 0; }
+    footer {
+      text-align: center;
+      padding: 28px 20px 44px;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid #f3e8df;
+    }
+    footer a { color: var(--blue); text-decoration: none; margin: 0 8px; }
+    [data-lang="en"] { display: none; }
+    body.en [data-lang="es"] { display: none; }
+    body.en [data-lang="en"] { display: initial; }
+    body.en div[data-lang="en"], body.en p[data-lang="en"], body.en section[data-lang="en"] { display: block; }
+    body.en div[data-lang="es"], body.en p[data-lang="es"], body.en section[data-lang="es"] { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-bar">
+      <div class="brand">StockTiendita MX</div>
+      <nav class="nav-links">
+        <a href="index.html" data-lang="es">Inicio</a>
+        <a href="index.html" data-lang="en">Home</a>
+        <a href="privacy-policy.html" data-lang="es">Privacidad</a>
+        <a href="privacy-policy.html" data-lang="en">Privacy</a>
+        <a href="terms.html" data-lang="es">Términos</a>
+        <a href="terms.html" data-lang="en">Terms</a>
+        <a href="support.html" data-lang="es">Soporte</a>
+        <a href="support.html" data-lang="en">Support</a>
+        <button class="lang-btn" onclick="toggleLang()">ES / EN</button>
+      </nav>
+    </div>
+    <div class="hero">
+      <h1 data-lang="es">Control de Inventario y Caducidad 100% Offline para tu Tiendita</h1>
+      <h1 data-lang="en">100% Offline Barcode Inventory & Expiry Alerts for Small Stores</h1>
+      <p data-lang="es">Escanea códigos de barras al instante, detecta productos próximos a vencer antes de perder dinero y genera órdenes de surtido por proveedor en PDF tamaño Carta sin depender de internet ni pagar rentas obligatorias.</p>
+      <p data-lang="en">Scan barcodes instantly on-device, catch expiring stock before it becomes waste, and generate supplier restock orders in Carta PDF without cloud lock-in or mandatory subscriptions.</p>
+      <div class="badges">
+        <span class="badge" data-lang="es">100% Sin Internet</span>
+        <span class="badge" data-lang="en">100% Offline</span>
+        <span class="badge" data-lang="es">Sin Cuentas ni Nube</span>
+        <span class="badge" data-lang="en">No Account Required</span>
+        <span class="badge" data-lang="es">Escáner EAN-13 / UPC</span>
+        <span class="badge" data-lang="en">EAN-13 / UPC Scanner</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid">
+      <div class="card">
+        <span class="tag">AVFoundation Local</span>
+        <h3 data-lang="es">Escáner Rápido de Anaquel</h3>
+        <h3 data-lang="en">Fast Shelf Barcode Scanner</h3>
+        <p data-lang="es">Registra entradas de mercancía, ventas rápidas o mermas escaneando con tu iPhone o iPad. Si no tienes cámara disponible, usa el buscador y captura manual al instante.</p>
+        <p data-lang="en">Record stock arrivals, quick sales, or shrinkage by scanning right on your iPhone or iPad, with instant keyboard barcode fallback whenever camera is unavailable.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Caducidad</span>
+        <h3 data-lang="es">Semáforo de Caducidad</h3>
+        <h3 data-lang="en">Smart Expiry Radar</h3>
+        <p data-lang="es">Separa automáticamente productos vencidos, urgentes (7 días o menos) y próximos a vencer (15 a 30 días), calculando tu costo en riesgo y precio sugerido de liquidación.</p>
+        <p data-lang="en">Automatically flags expired items, urgent stock (≤7 days), and upcoming expirations (15–30 days), calculating capital at risk and suggested clearance pricing.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Surtido MXN</span>
+        <h3 data-lang="es">Órdenes por Proveedor en PDF</h3>
+        <h3 data-lang="en">Supplier Restock PDF & CSV</h3>
+        <p data-lang="es">Agrupa todo lo que bajó de tu stock mínimo por cada proveedor y exporta tu lista de surtido en PDF tamaño Carta o CSV listo para compartir.</p>
+        <p data-lang="en">Groups low-stock products by supplier with estimated MXN cost and exports clean US Letter (Carta) PDF and CSV sheets ready to share.</p>
+      </div>
+    </div>
+
+    <div class="pricing-box">
+      <h2 data-lang="es">Plan Gratuito y Opciones Pro Transparentes (MXN)</h2>
+      <h2 data-lang="en">Free Tier & Transparent Pro Options (MXN)</h2>
+      <p data-lang="es">Empieza gratis gestionando hasta 30 productos completos sin anuncios ni fecha límite. Actualiza a Pro solo si tu tienda necesita catálogo ilimitado y exportación PDF/CSV.</p>
+      <p data-lang="en">Start free with up to 30 full products, zero ads, and no expiration. Upgrade to Pro only when you need unlimited SKUs and Carta PDF / CSV exports.</p>
+      <div class="plans">
+        <div class="plan featured">
+          <strong data-lang="es">Pro Vitalicio (Pago Único)</strong>
+          <strong data-lang="en">Pro Lifetime (One-Time)</strong>
+          <div class="price">$999 MXN</div>
+          <p data-lang="es">Paga una sola vez y úsalo para siempre sin renovaciones.</p>
+          <p data-lang="en">Pay once and keep Pro forever with no recurring renewals.</p>
+        </div>
+        <div class="plan">
+          <strong data-lang="es">Pro Anual</strong>
+          <strong data-lang="en">Pro Annual</strong>
+          <div class="price">$599 MXN / año</div>
+          <p data-lang="es">Incluye 7 días de prueba gratis. Cancela cuando quieras.</p>
+          <p data-lang="en">Includes 7-day free trial. Cancel anytime via Apple ID.</p>
+        </div>
+        <div class="plan">
+          <strong data-lang="es">Pro Mensual</strong>
+          <strong data-lang="en">Pro Monthly</strong>
+          <div class="price">$89 MXN / mes</div>
+          <p data-lang="es">Flexibilidad mes a mes para temporadas altas.</p>
+          <p data-lang="en">Flexible month-to-month access for busy seasons.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 StockTiendita MX · Contacto / Support: <a href="mailto:sg12101517@gmail.com">sg12101517@gmail.com</a></p>
+    <p style="margin-top:8px;">
+      <a href="privacy-policy.html">Aviso de Privacidad (LFPDPPP)</a> ·
+      <a href="terms.html">Términos de Uso (EULA)</a> ·
+      <a href="support.html">Soporte Técnico</a>
+    </p>
+  </footer>
+  <script>
+    function toggleLang() {
+      document.body.classList.toggle('en');
+    }
+  </script>
+</body>
+</html>
